@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0a12" />
+  <meta name="description" content="Ma Sói — công cụ Quản trò, thư viện vai trò và luật chơi Ma Sói (Werewolf) bằng tiếng Việt." />
+  <title>Ma Sói — Quản Trò</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='58' fill='%23f1d79a'/%3E%3Cpath fill='%2315111d' d='M60 104 L48 92 L40 92 L36 82 L28 76 L30 66 L22 56 L26 44 L24 14 L44 30 L60 27 L76 30 L96 14 L94 44 L98 56 L90 66 L92 76 L84 82 L80 92 L72 92 Z'/%3E%3Cpath fill='%23ff4b3e' d='M35 51 L52 58 L40 61 Z M85 51 L68 58 L80 61 Z'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <main id="app">
+    <!-- ================= HOME ================= -->
+    <section class="screen" id="screen-home" data-screen="home">
+      <div class="home">
+        <div class="home-logo" id="home-logo"></div>
+        <h1 class="home-title">Ma Sói</h1>
+        <p class="home-sub">Đêm buông xuống&hellip; ai trong làng là Sói?</p>
+
+        <nav class="home-nav">
+          <a class="big-btn big-btn--gm" href="#gm">
+            <span class="big-btn__icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4L4.2 7.7l5.4-.8z" fill="currentColor"/><path d="M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="big-btn__text">
+              <strong>Vào Game (Quản Trò)</strong>
+              <small id="home-resume">Thiết lập &amp; điều khiển ván chơi</small>
+            </span>
+            <span class="big-btn__arrow" aria-hidden="true">&rsaquo;</span>
+          </a>
+          <a class="big-btn" href="#library">
+            <span class="big-btn__icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="4" width="7" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6.5 8v3M17.5 8v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="big-btn__text">
+              <strong>Thư Viện Vai Trò</strong>
+              <small>19 vai trò thuộc 3 phe</small>
+            </span>
+            <span class="big-btn__arrow" aria-hidden="true">&rsaquo;</span>
+          </a>
+          <a class="big-btn" href="#rules">
+            <span class="big-btn__icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h10a2 2 0 0 1 2 2v14a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 8h5M9.5 12h5M9.5 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="big-btn__text">
+              <strong>Quy Luật &amp; Cách Chơi</strong>
+              <small>Luật chuẩn &amp; thứ tự gọi đêm</small>
+            </span>
+            <span class="big-btn__arrow" aria-hidden="true">&rsaquo;</span>
+          </a>
+        </nav>
+
+        <p class="home-foot">Dành cho 6 – 20 người chơi &middot; 1 Quản trò</p>
+      </div>
+    </section>
+
+    <!-- ================= GAME MASTER ================= -->
+    <section class="screen" id="screen-gm" data-screen="gm">
+      <header class="topbar">
+        <a class="icon-btn" href="#home" aria-label="Về trang chủ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <h2 class="topbar__title" id="gm-title">Quản Trò</h2>
+        <button class="icon-btn" type="button" id="gm-menu-btn" aria-label="Tùy chọn ván">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
+        </button>
+      </header>
+      <div id="gm-setup" class="gm-view"></div>
+      <div id="gm-play" class="gm-view"></div>
+    </section>
+
+    <!-- ================= LIBRARY ================= -->
+    <section class="screen" id="screen-library" data-screen="library">
+      <header class="topbar">
+        <a class="icon-btn" href="#home" aria-label="Về trang chủ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <h2 class="topbar__title">Thư Viện Vai Trò</h2>
+        <span class="icon-btn icon-btn--ghost" aria-hidden="true"></span>
+      </header>
+      <div class="lib-tools">
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="lib-search" type="search" placeholder="Tìm vai trò… (vd: sói, tiên tri)" autocomplete="off" />
+        </label>
+        <div class="chips" id="lib-filters" role="tablist" aria-label="Lọc theo phe">
+          <button class="chip is-active" data-filter="all" type="button">Tất cả</button>
+          <button class="chip chip--village" data-filter="village" type="button">Phe Dân</button>
+          <button class="chip chip--wolf" data-filter="wolf" type="button">Phe Sói</button>
+          <button class="chip chip--third" data-filter="third" type="button">Phe Thứ 3</button>
+        </div>
+      </div>
+      <div class="content">
+        <p class="lib-count" id="lib-count"></p>
+        <div class="role-grid" id="lib-grid"></div>
+      </div>
+    </section>
+
+    <!-- ================= RULES ================= -->
+    <section class="screen" id="screen-rules" data-screen="rules">
+      <header class="topbar">
+        <a class="icon-btn" href="#home" aria-label="Về trang chủ">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <h2 class="topbar__title">Quy Luật &amp; Cách Chơi</h2>
+        <span class="icon-btn icon-btn--ghost" aria-hidden="true"></span>
+      </header>
+      <div class="content rules">
+        <nav class="toc" aria-label="Mục lục">
+          <a href="#rules" data-jump="r-intro">1. Tổng quan</a>
+          <a href="#rules" data-jump="r-round">2. Một vòng chơi</a>
+          <a href="#rules" data-jump="r-vote">3. Bỏ phiếu</a>
+          <a href="#rules" data-jump="r-order">4. Thứ tự gọi đêm</a>
+        </nav>
+
+        <article class="rule-card" id="r-intro">
+          <h3><span class="num">1</span> Giới thiệu &amp; Mục tiêu các phe</h3>
+          <p><strong>Ma Sói</strong> là trò chơi suy luận nhập vai. Mỗi người bí mật nhận một lá vai trò. Trong làng có những con Ma Sói đội lốt người — ban đêm chúng săn mồi, ban ngày chúng hòa vào đám đông. Một <strong>Quản trò</strong> không tham gia chơi sẽ điều khiển toàn bộ ván.</p>
+          <div class="goal goal--village">
+            <h4>Phe Dân Làng</h4>
+            <p>Tìm ra và treo cổ <strong>toàn bộ Ma Sói</strong>. Dân làng thắng khi không còn con Sói nào sống sót.</p>
+          </div>
+          <div class="goal goal--wolf">
+            <h4>Phe Ma Sói</h4>
+            <p>Giết dần dân làng. Sói thắng khi <strong>số Sói còn sống ≥ số Dân còn sống</strong>.</p>
+          </div>
+          <div class="goal goal--third">
+            <h4>Phe Thứ 3</h4>
+            <p>Mỗi vai có điều kiện thắng riêng: Thằng Ngố muốn bị treo cổ, Kẻ Thổi Sáo muốn thôi miên cả làng, Sói Trắng và Sát Nhân muốn là người cuối cùng sống sót. Cặp Đôi khác phe thắng khi chỉ còn 2 người họ.</p>
+          </div>
+          <ul class="bullets">
+            <li>Người chết <strong>không được nói</strong> và không được tiết lộ vai trò (trừ khi luật nhà cho phép lật bài).</li>
+            <li>Không được cho người khác xem lá bài của mình.</li>
+            <li>Số Sói gợi ý: khoảng <strong>1 Sói cho mỗi 3–4 người chơi</strong>.</li>
+          </ul>
+        </article>
+
+        <article class="rule-card" id="r-round">
+          <h3><span class="num">2</span> Diễn biến một vòng chơi</h3>
+          <div class="phase phase--night">
+            <h4><span aria-hidden="true">🌙</span> Ban Đêm</h4>
+            <ol>
+              <li>Quản trò hô <em>"Trời tối, cả làng đi ngủ"</em> — mọi người nhắm mắt.</li>
+              <li>Quản trò lần lượt gọi từng vai thức dậy theo <strong>thứ tự chuẩn</strong> (mục 4).</li>
+              <li>Vai được gọi mở mắt, ra hiệu bằng tay chọn mục tiêu, rồi nhắm mắt lại.</li>
+              <li>Bầy Sói thức dậy cùng nhau và thống nhất chọn 1 nạn nhân.</li>
+              <li>Tất cả thao tác phải im lặng, tránh gây tiếng động lộ vị trí.</li>
+            </ol>
+          </div>
+          <div class="phase phase--day">
+            <h4><span aria-hidden="true">☀️</span> Ban Ngày</h4>
+            <ol>
+              <li>Quản trò hô <em>"Trời sáng"</em> và công bố ai đã chết trong đêm (không nói vai).</li>
+              <li>Kích hoạt các hiệu ứng khi chết: Thợ Săn bắn, Cặp Đôi chết theo&hellip;</li>
+              <li>Cả làng thảo luận tự do, tố cáo, biện hộ.</li>
+              <li>Bỏ phiếu treo cổ 1 người (mục 3).</li>
+              <li>Kiểm tra điều kiện thắng — nếu chưa phe nào thắng, sang đêm tiếp theo.</li>
+            </ol>
+          </div>
+        </article>
+
+        <article class="rule-card" id="r-vote">
+          <h3><span class="num">3</span> Quy tắc bỏ phiếu treo cổ</h3>
+          <ul class="bullets">
+            <li><strong>Đề cử:</strong> Ai cũng có thể đề cử 1 người nghi là Sói. Cần ít nhất 1 người khác đồng ý để đưa ra bỏ phiếu.</li>
+            <li><strong>Biện hộ:</strong> Người bị đề cử có khoảng 30–60 giây để thanh minh.</li>
+            <li><strong>Bỏ phiếu:</strong> Quản trò đếm ngược "3 – 2 – 1", tất cả cùng lúc chỉ tay vào người mình chọn.</li>
+            <li><strong>Đa số:</strong> Người nhận nhiều phiếu nhất bị treo cổ. Thị Trưởng được tính 2 phiếu.</li>
+            <li><strong>Hòa phiếu:</strong> Không ai bị treo (hoặc Thị Trưởng quyết định — tùy luật nhà).</li>
+            <li><strong>Người chết:</strong> Không được bỏ phiếu và không được nói chuyện.</li>
+            <li><strong>Lật bài:</strong> Sau khi bị treo, người chết có lật bài hay không là do luật nhà quy định trước ván.</li>
+          </ul>
+        </article>
+
+        <article class="rule-card" id="r-order">
+          <h3><span class="num">4</span> Thứ tự gọi dậy ban đêm</h3>
+          <p class="muted">Bảng chuẩn dành cho Quản trò. Gọi cả những vai đã chết (giả vờ chờ vài giây) để không lộ thông tin.</p>
+          <ol class="night-order" id="rules-night-order"></ol>
+          <div class="callout">
+            <strong>Mẹo Quản trò:</strong> Nói cùng một nhịp cho mọi vai, kể cả vai không có trong ván, để người chơi không đoán được bộ bài.
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lớp bottom-sheet & hộp thoại -->
+  <div class="layer layer--sheet" id="sheet" aria-hidden="true">
+    <div class="layer__backdrop" data-close></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet__grip" aria-hidden="true"></div>
+      <button class="sheet__close icon-btn" type="button" data-close aria-label="Đóng">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+      <div class="sheet__body" id="sheet-body"></div>
+    </div>
+  </div>
+
+  <div class="layer layer--dialog" id="dialog" aria-hidden="true">
+    <div class="layer__backdrop"></div>
+    <div class="dialog" role="alertdialog" aria-modal="true" id="dialog-body"></div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="js/roles.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
