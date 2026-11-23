@@ -628,22 +628,109 @@
     ROLE_MAP[r.id] = r;
   });
 
-  /* ---------- Thứ tự gọi dậy ban đêm ---------- */
+  /* ---------- Kịch bản ban đêm (thứ tự gọi dậy chuẩn) ----------
+     line: câu thoại gợi ý cho Quản trò đọc to
+     note: ghi chú riêng cho Quản trò                                  */
   const NIGHT_STEPS = [
-    { key: 'sleep', label: 'Cả làng đi ngủ', roles: [], always: true, note: 'Mọi người nhắm mắt, cúi đầu. Quản trò bắt đầu gọi theo thứ tự.' },
-    { key: 'cupid', label: 'Cupid', roles: ['cupid'], firstNight: true, note: 'Chọn 2 người làm Cặp Đôi.' },
-    { key: 'lovers', label: 'Cặp Đôi', roles: ['cupid'], firstNight: true, note: 'Quản trò chạm vai 2 người được chọn; họ mở mắt nhìn nhau rồi ngủ lại.' },
-    { key: 'guard', label: 'Bảo Vệ', roles: ['guard'], note: 'Chọn 1 người để bảo vệ (không trùng với đêm trước).' },
-    { key: 'seer', label: 'Tiên Tri', roles: ['seer'], note: 'Chọn 1 người để soi; Quản trò ra hiệu Sói / Không phải Sói.' },
-    { key: 'wolves', label: 'Bầy Ma Sói', roles: ['wolf', 'alphawolf', 'cursedwolf', 'wolfcub', 'wolfseer', 'whitewolf'], note: 'Cả bầy thức dậy, thống nhất cắn 1 người. Bé Gái được hé mắt lúc này.' },
-    { key: 'cursed', label: 'Sói Nguyền', roles: ['cursedwolf'], note: 'Ra hiệu có dùng lời nguyền thay vì giết không (1 lần/ván).' },
-    { key: 'wolfseer', label: 'Sói Tiên Tri', roles: ['wolfseer'], note: 'Chọn 1 người để biết chính xác vai trò.' },
-    { key: 'whitewolf', label: 'Sói Trắng', roles: ['whitewolf'], evenNight: true, note: 'Chỉ đêm chẵn: thức riêng, có thể giết 1 Ma Sói.' },
-    { key: 'witch', label: 'Phù Thủy', roles: ['witch'], note: 'Chỉ người bị cắn; hỏi có dùng thuốc cứu, có dùng thuốc độc không.' },
-    { key: 'killer', label: 'Sát Nhân', roles: ['killer'], note: 'Chọn 1 người để giết.' },
-    { key: 'piper', label: 'Kẻ Thổi Sáo', roles: ['piper'], note: 'Chọn 2 người để thôi miên.' },
-    { key: 'hypno', label: 'Người bị thôi miên', roles: ['piper'], note: 'Chạm vai người mới bị thôi miên; tất cả người bị thôi miên mở mắt nhận nhau.' },
-    { key: 'dawn', label: 'Trời sáng', roles: [], always: true, note: 'Cả làng thức dậy. Quản trò công bố ai đã chết trong đêm.' }
+    {
+      key: 'sleep', label: 'Cả làng đi ngủ', roles: [], always: true,
+      line: 'Trời tối rồi, cả làng đi ngủ. Mọi người nhắm mắt lại và cúi đầu xuống.',
+      note: 'Chờ mọi người nhắm mắt hẳn rồi mới bắt đầu gọi.'
+    },
+    {
+      key: 'cupid', label: 'Cupid', roles: ['cupid'], firstNight: true,
+      line: 'Cupid ơi, hãy thức dậy! Bạn muốn bắn mũi tên tình yêu vào hai người nào?',
+      note: 'Chọn 2 người làm Cặp Đôi (có thể gồm chính Cupid).'
+    },
+    {
+      key: 'lovers', label: 'Cặp Đôi nhận nhau', roles: ['cupid'], firstNight: true,
+      line: 'Cupid ngủ đi. Tôi sẽ chạm vai hai người được ghép đôi — Cặp Đôi hãy mở mắt nhận nhau… rồi ngủ lại.',
+      note: 'Chạm vai đúng 2 người đã chọn ở bước Cupid.'
+    },
+    {
+      key: 'guard', label: 'Bảo Vệ', roles: ['guard'],
+      line: 'Bảo Vệ ơi, dậy đi! Đêm nay bạn muốn bảo vệ ai?',
+      note: 'Không được bảo vệ cùng 1 người 2 đêm liên tiếp.'
+    },
+    {
+      key: 'seer', label: 'Tiên Tri', roles: ['seer'],
+      line: 'Tiên Tri ơi, dậy đi! Đêm nay bạn muốn soi ai?',
+      note: 'Ra hiệu: ngón cái xuống = LÀ Sói, ngón cái lên = KHÔNG phải Sói.'
+    },
+    {
+      key: 'wolves', label: 'Bầy Ma Sói', roles: ['wolf', 'alphawolf', 'cursedwolf', 'wolfcub', 'wolfseer', 'whitewolf'],
+      line: 'Ma Sói ơi, thức dậy đi! Cả bầy hãy thống nhất: đêm nay các bạn muốn cắn ai?',
+      note: 'Bé Gái được hé mắt nhìn trộm trong lượt này.'
+    },
+    {
+      key: 'cursed', label: 'Sói Nguyền', roles: ['cursedwolf'],
+      line: 'Sói Nguyền ơi, bạn có muốn dùng lời nguyền, biến nạn nhân này thành đồng loại thay vì giết không?',
+      note: 'Chỉ dùng được 1 lần trong cả ván.'
+    },
+    {
+      key: 'wolfseer', label: 'Sói Tiên Tri', roles: ['wolfseer'],
+      line: 'Sói Tiên Tri ơi, bạn muốn xem vai trò thật của ai?',
+      note: 'Chỉ vào lá bài / ra hiệu vai trò chính xác của người được chọn.'
+    },
+    {
+      key: 'whitewolf', label: 'Sói Trắng', roles: ['whitewolf'], evenNight: true,
+      line: 'Sói Trắng ơi, dậy đi! Đêm nay bạn có muốn giết một con Ma Sói nào không?',
+      note: 'Chỉ gọi vào các đêm chẵn.'
+    },
+    {
+      key: 'witch', label: 'Phù Thủy', roles: ['witch'],
+      line: 'Phù Thủy ơi, dậy đi! Đây là người bị cắn đêm nay. Bạn có muốn cứu không? Bạn có muốn dùng thuốc độc lên ai không?',
+      note: 'Chỉ tay vào nạn nhân của Sói trước khi hỏi.'
+    },
+    {
+      key: 'killer', label: 'Sát Nhân', roles: ['killer'],
+      line: 'Sát Nhân ơi, dậy đi! Đêm nay bạn muốn giết ai?',
+      note: 'Bảo Vệ không chặn được đòn của Sát Nhân.'
+    },
+    {
+      key: 'piper', label: 'Kẻ Thổi Sáo', roles: ['piper'],
+      line: 'Kẻ Thổi Sáo ơi, dậy đi! Bạn muốn thôi miên hai người nào?',
+      note: 'Không chọn lại người đã bị thôi miên.'
+    },
+    {
+      key: 'hypno', label: 'Người bị thôi miên', roles: ['piper'],
+      line: 'Kẻ Thổi Sáo ngủ đi. Tôi sẽ chạm vai những người vừa bị thôi miên. Tất cả người bị thôi miên hãy mở mắt nhận nhau… rồi ngủ lại.',
+      note: 'Chạm vai đúng những người vừa được chọn.'
+    },
+    {
+      key: 'tetanus', label: 'Uốn ván (Hiệp Sĩ)', roles: ['knight'], tetanus: true,
+      line: '(Không đọc to) Con Sói ngồi gần nhất bên trái Hiệp Sĩ chết vì uốn ván.',
+      note: 'Chỉ xuất hiện vào đêm sau khi Hiệp Sĩ bị Sói cắn chết.'
+    },
+    {
+      key: 'dawn', label: 'Trời sáng', roles: [], always: true,
+      line: 'Trời sáng rồi! Cả làng thức dậy nào.',
+      note: 'Bấm "Kết thúc Đêm" ở cuối trang để tự động tính kết quả.'
+    }
+  ];
+
+  /* ---------- Kịch bản ban ngày ---------- */
+  const DAY_STEPS = [
+    {
+      key: 'wake', label: 'Công bố kết quả đêm', roles: [], always: true,
+      line: 'Trời sáng rồi! Đêm qua trong làng đã xảy ra chuyện…',
+      note: 'Chỉ công bố tên người chết, KHÔNG tiết lộ vai trò hay nguyên nhân.'
+    },
+    {
+      key: 'discuss', label: 'Thảo luận', roles: [], always: true,
+      line: 'Mời cả làng thảo luận. Ai là người đáng nghi nhất? Ai là Ma Sói?',
+      note: 'Dùng đồng hồ đếm ngược để giữ nhịp ván chơi.'
+    },
+    {
+      key: 'vote', label: 'Bỏ phiếu treo cổ', roles: [], always: true,
+      line: 'Đã đến giờ bỏ phiếu! Tôi đếm 3 – 2 – 1, tất cả cùng chỉ tay vào người mình nghi ngờ.',
+      note: 'Người nhiều phiếu nhất bị treo. Hòa phiếu: không ai bị treo (hoặc theo luật nhà).'
+    },
+    {
+      key: 'dusk', label: 'Hoàng hôn', roles: [], always: true,
+      line: 'Phán quyết đã được đưa ra. Mặt trời đã lặn, cả làng chuẩn bị đi ngủ…',
+      note: 'Bấm "Kết thúc Ngày" ở cuối trang để sang đêm tiếp theo.'
+    }
   ];
 
   global.MASOI_DATA = {
@@ -651,6 +738,7 @@
     ROLES: ROLES,
     ROLE_MAP: ROLE_MAP,
     NIGHT_STEPS: NIGHT_STEPS,
+    DAY_STEPS: DAY_STEPS,
     LOGO: LOGO,
     TROPHY: TROPHY
   };
